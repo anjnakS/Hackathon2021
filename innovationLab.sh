@@ -10,9 +10,9 @@ export PATH
 echo "########################## "
 echo -e  "Install Maven"
 echo "######################### "
-wget https://apache.osuosl.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz
-tar -xvzf apache-maven-3.8.1-bin.tar.gz
-sudo mv apache-maven-3.8.1 /opt
+sudo  wget http://mirror.olnevhost.net/pub/apache/maven/binaries//apache-maven-3.2.2-bin.tar.gz
+tar -xvzf apache-maven-3.2.2-bin.tar.gz
+sudo mv apache-maven-3.2.2 /opt
 M2_HOME=/opt/apache-maven-3.8.1
 PATH=$PATH:$M2_HOME/bin
 export PATH
