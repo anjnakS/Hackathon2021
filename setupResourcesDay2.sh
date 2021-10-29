@@ -111,7 +111,7 @@ egrep -lRZ $POSTGRES_ORIG_DB | xargs -0 -l sed -i -e s/$POSTGRES_ORIG_DB/$POSTGR
 egrep -lRZ "anjnaq" | xargs -0 -l sed -i -e s/"anjnaq"/"anjnaq"$VERSION/g
 egrep -lRZ $POSTGRES_ORIG_USER | xargs -0 -l sed -i -e s/$POSTGRES_ORIG_USER/$POSTGRES_NEW_USER/g
 cd stocks-master
-mvn install
+mvn clean install
 cd ..
 cd stocks-react-master
 npm clean install
