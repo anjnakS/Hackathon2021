@@ -94,11 +94,7 @@ SBCONNSTRING=$(sudo az servicebus namespace authorization-rule keys list --resou
 #every queue has its own list of participants=> senders and receivers \
 #queue=> group chat thread on whatsapp
 sudo az servicebus queue create --resource-group $RESOURCE_GROUP --namespace-name $SERVICEBUSNAME --name $SERVICEBUSQUEUE
-echo -e "azure.keyvault.client-id="$SP_APPID
-echo -e "azure.keyvault.client-key="$SP_PASSWORD
-echo -e "azure.keyvault.tenant-id="$SP_TENANT_ID
-echo -e "azure.keyvault.uri=https://"$KEYVAULTNAME".vault.azure.net/"
-echo -e "spring.jms.servicebus.connection-string="$SBCONNSTRING
+
 egrep -lRZ "3243dffc-1cc3-42e6-89ad-9d7eeed1d23b" | xargs -0 -l sed -i -e s/"3243dffc-1cc3-42e6-89ad-9d7eeed1d23b"/$SP_APPID/g
 egrep -lRZ "S~GBcRDBuddGAFUPlj1Oj7YwH03drJ.0Ld" | xargs -0 -l sed -i -e s/"S~GBcRDBuddGAFUPlj1Oj7YwH03drJ.0Ld"/$SP_PASSWORD/g
 egrep -lRZ "https://contosokvakm.vault.azure.net/" | xargs -0 -l sed -i -e s+"https://contosokvakm.vault.azure.net/"+"https://"$KEYVAULTNAME".vault.azure.net/"+g
@@ -120,3 +116,8 @@ cd stocks-worker
 mvn clean install
 mvn package
 cd ..
+echo -e "azure.keyvault.client-id="$SP_APPID
+echo -e "azure.keyvault.client-key="$SP_PASSWORD
+echo -e "azure.keyvault.tenant-id="$SP_TENANT_ID
+echo -e "azure.keyvault.uri=https://"$KEYVAULTNAME".vault.azure.net/"
+echo -e "spring.jms.servicebus.connection-string="$SBCONNSTRING
