@@ -2,7 +2,7 @@
 <ApplicationInsights xmlns="http://schemas.microsoft.com/ApplicationInsights/2013/Settings" schemaVersion="2014-05-30">
 
    <!-- The key from the portal: -->
-   <InstrumentationKey>395d3df6-24d2-45e6-81de-0ad28a52cc99</InstrumentationKey>
+   <InstrumentationKey>c1615509-3a2d-48d2-86c4-355ffa320e61</InstrumentationKey>
 
    <!-- HTTP request component (not required for bare API) -->
    <TelemetryModules>
