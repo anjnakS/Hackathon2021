@@ -1,2 +1,2 @@
 #Innovation
-http:\\cluster-client_ip
+http://cluster-client_ip:8082
