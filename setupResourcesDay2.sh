@@ -1,7 +1,7 @@
 echo "########################## "
 echo -e  " Set Shell variables"
 echo "######################### "
-VERSION=2
+VERSION=1
 SUBSCRIPTION="e247041b-0729-4095-9488-564fbc84a3b7"
 RESOURCE_GROUP="default"
 AKS_CLUSTER_NAME="anjnaaks"$VERSION
