@@ -6,11 +6,11 @@ SUBSCRIPTION="e247041b-0729-4095-9488-564fbc84a3b7"
 RESOURCE_GROUP="default"
 AKS_CLUSTER_NAME="innovationaks"$VERSION
 AKS_VNET_SUBNET="default-"$VERSION
-ACR_REG_NAME="innovationacr"
+ACR_REG_NAME="anjnaacr"
 ACR_REG_NEW_NAME="innovationacr"$VERSION
 AKS_ROUTE_TABLE="innovation_aks_route_table"$VERSION
 APP_GATEWAY_NAME="appgateway"$VERSION
-APP_GATEWAY_CIDR="10.1.205.0/24"
+APP_GATEWAY_CIDR="10.1.204.0/24"
 echo "########################## "
 echo -e  " Create docker images and push them to ACR "
 echo "c######################## "
