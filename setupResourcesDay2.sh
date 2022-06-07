@@ -104,7 +104,7 @@ egrep -lRZ $SERVER_ORIG_IP | xargs -0 -l sed -i -e s/$SERVER_ORIG_IP/$SERVER_NEW
 egrep -lRZ $POSTGRES_ORIG_PASSWD | xargs -0 -l sed -i -e s/$POSTGRES_ORIG_PASSWD/$POSTGRES_NEW_PASSWD/g
 egrep -lRZ $POSTGRES_ORIG_DB | xargs -0 -l sed -i -e s/$POSTGRES_ORIG_DB/$POSTGRES_NEW_DB/g
 #egrep -lRZ $POSTGRES_USER_NAME_ORIG | xargs -0 -l sed -i -e s/$POSTGRES_USER_NAME_ORIG/$POSTGRES_USER_NAME/g
-egrep -lRZ "innovationq" | xargs -0 -l sed -i -e s/"innovationq"/"innovationq"$VERSION/g
+egrep -lRZ "anjnaq" | xargs -0 -l sed -i -e s/"innovationq"/"innovationq"$VERSION/g
 egrep -lRZ $POSTGRES_ORIG_USER | xargs -0 -l sed -i -e s/$POSTGRES_ORIG_USER/$POSTGRES_NEW_USER/g
 cd stocks-master
 mvn clean install
