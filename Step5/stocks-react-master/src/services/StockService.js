@@ -75,7 +75,7 @@ class StockService {
    */
   getAllSymbols() {
     axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
-    return axios.get(`http://10.1.207.98:8700/transformers/all-stocks`)
+    return axios.get(`http://server-cluster-ip-service/transformers/all-stocks`)
                 .then(results => {
                     return results.data;
                 });
