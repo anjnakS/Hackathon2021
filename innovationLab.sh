@@ -10,10 +10,10 @@ export PATH
 echo "########################## "
 echo -e  "Install Maven"
 echo "######################### "
-sudo wget https://apache.osuosl.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz
-tar -xvzf apache-maven-3.8.5-bin.tar.gz
-sudo mv apache-maven-3.8.5 /opt
-M2_HOME=/opt/apache-maven-3.8.5
+sudo wget https://apache.osuosl.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
+tar -xvzf apache-maven-3.8.6-bin.tar.gz
+sudo mv apache-maven-3.8.6 /opt
+M2_HOME=/opt/apache-maven-3.8.6
 PATH=$PATH:$M2_HOME/bin
 export PATH
 echo "########################## "
