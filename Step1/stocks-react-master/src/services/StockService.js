@@ -54,7 +54,7 @@ class StockService {
     axios.defaults.headers.get['Access-Control-Allow-Headers'] = 'Origin, Content-Type, X-Auth-Token';
     
     return axios
-    .get(`http://172.16.1.231:8700/api/v1/stocks`)
+    .get(`http://172.16.44.72:8700/api/v1/stocks`)
     .then(results => {
       console.log(results);
       return results.data.map(d => {
@@ -75,7 +75,7 @@ class StockService {
    */
   getAllSymbols() {
     axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
-    return axios.get(`http://172.16.1.231:8700/transformers/all-stocks`)
+    return axios.get(`http://172.16.44.72:8700/transformers/all-stocks`)
                 .then(results => {
                     return results.data;
                 });
