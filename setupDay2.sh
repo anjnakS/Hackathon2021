@@ -1,18 +1,19 @@
 echo "########################## "
 echo -e  " Set Shell variables"
 echo "######################### "
-VERSION=2
+VERSION=1
 SUBSCRIPTION="e247041b-0729-4095-9488-564fbc84a3b7"
 RESOURCE_GROUP="default"
-AKS_CLUSTER_NAME="anjnaaks"$VERSION
+AKS_CLUSTER_NAME="innovationaks"$VERSION
 AKS_VNET_SUBNET="default-"$VERSION
 ACR_REG_NAME="anjnaacr"
-ACR_REG_NEW_NAME="anjnaacr"$VERSION
-AKS_ROUTE_TABLE="anjna_aks_route_table"$VERSION
-
+ACR_REG_NEW_NAME="innovationacr"$VERSION
+AKS_ROUTE_TABLE="innovation_aks_route_table"$VERSION
+APP_GATEWAY_NAME="appgateway"$VERSION
+APP_GATEWAY_CIDR="10.1.204.0/24"
 echo "########################## "
 echo -e  " Create docker images and push them to ACR "
-echo "######################### "
+echo "c######################## "
 sudo docker-compose up --no-start
 sudo docker tag anjnadockerid1/stocksserverfrontend:v3 $ACR_REG_NEW_NAME.azurecr.io/stocksserverfrontend:v3
 sudo docker tag anjnadockerid1/stocksserverbackend:v3 $ACR_REG_NEW_NAME.azurecr.io/stocksserverbackend:v3
@@ -29,6 +30,7 @@ sudo az network route-table create --subscription $SUBSCRIPTION --name $AKS_ROUT
 sudo az network route-table route create --subscription $SUBSCRIPTION --route-table-name $AKS_ROUTE_TABLE --resource-group infrastructure --name default-route --address-prefix 0.0.0.0/0 --next-hop-type VirtualNetworkGateway
 sudo az network vnet subnet update --subscription $SUBSCRIPTION --resource-group infrastructure --vnet-name default --name $AKS_VNET_SUBNET --route-table $AKS_ROUTE_TABLE
 sudo az aks create --subscription $SUBSCRIPTION --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME --outbound-type userDefinedRouting --network-plugin azure --generate-ssh-keys --vnet-subnet-id /subscriptions/$SUBSCRIPTION/resourceGroups/infrastructure/providers/Microsoft.Network/virtualNetworks/default/subnets/$AKS_VNET_SUBNET
+#sudo az aks create --subscription $SUBSCRIPTION --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME --network-plugin azure --enable-managed-identity -a ingress-appgw --appgw-name $APP_GATEWAY_NAME  --generate-ssh-keys --appgw-subnet-cidr $APP_GATEWAY_CIDR
 SP_ID=$(sudo az resource list --subscription $SUBSCRIPTION --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME --query [*].identity.principalId -o tsv)
 sudo az role assignment create --assignee $SP_ID --role "Contributor" --scope /subscriptions/$SUBSCRIPTION/resourceGroups/infrastructure
 sudo az aks get-credentials --subscription $SUBSCRIPTION --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME

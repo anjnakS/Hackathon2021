@@ -1,35 +1,35 @@
 echo "########################## "
 echo -e  " Set Shell variables"
 echo "######################### "
-VERSION=2
+VERSION=1
 SUBSCRIPTION="e247041b-0729-4095-9488-564fbc84a3b7"
 RESOURCE_GROUP="default"
-AKS_CLUSTER_NAME="anjnaaks"$VERSION
+AKS_CLUSTER_NAME="innovationaks"$VERSION
 AKS_VNET_SUBNET="default-"$VERSION
-ACR_REG_NAME="anjnaacr"$VERSION
-POSTGRES_USER_NAME="anjna"$VERSION
-#POSTGRES_USER_NAME_ORIG="anjnak"
-AKS_ROUTE_TABLE="anjna_aks_route_table"$VERSION
-POSTGRES_DB=anjnapostgres$VERSION
+ACR_REG_NAME="innovationacr"$VERSION
+POSTGRES_USER_NAME="innovation"$VERSION
+
+AKS_ROUTE_TABLE="innovation_aks_route_table"$VERSION
+POSTGRES_DB=innovationpostgres$VERSION
 LOCATION="eastus"
 SKU="Basic"
-SERVICEBUSNAME="anjnasb"$VERSION
-SERVICEBUSQUEUE="anjnaq"$VERSION
-KEYVAULTNAME="safevault"$VERSION
+SERVICEBUSNAME="innovationsb"$VERSION
+SERVICEBUSQUEUE="innovationq"$VERSION
+KEYVAULTNAME="newsafevault"$VERSION
 POSTGRES_PASSWD="Postgres"$VERSION
-SERVICE_PRINCIPAL="anjnasp"$VERSION
+SERVICE_PRINCIPAL="innovationsp"$VERSION
 SP_TENANT_ID="8d09f28d-2b54-4761-98f1-de38762cd939"
 CLIENT_ORIG_IP="10.1.207.97"
- CLIENT_NEW_IP="10.1.205.97"
+ CLIENT_NEW_IP="10.1.204.97"
  SERVER_ORIG_IP="10.1.207.98"
- SERVER_NEW_IP="10.1.205.98"
- POSTGRES_ORIG_DB="anjnapostgres"
- POSTGRES_NEW_DB="anjnapostgres"$VERSION
+ SERVER_NEW_IP="10.1.204.98"
+ POSTGRES_ORIG_DB="innovationpostgres"
+ POSTGRES_NEW_DB="innovationpostgres"$VERSION
  POSTGRES_ORIG_USER="workeruser"
- POSTGRES_NEW_USER="anjna"$VERSION"@anjnapostgres"$VERSION
+ POSTGRES_NEW_USER="innovation"$VERSION"@innovationpostgres"$VERSION
  POSTGRES_ORIG_PASSWD="Postgres1"
  POSTGRES_NEW_PASSWD="Postgres"$VERSION
- SC_OLDCONNECTION="Endpoint=sb://anjnasb.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=oS39J7eYXEUUOPe9Nz8zRX1hiNpkH4FmXYSe8Glr78Y="
+ SC_OLDCONNECTION="Endpoint=sb://innovationsb.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=oS39J7eYXEUUOPe9Nz8zRX1hiNpkH4FmXYSe8Glr78Y="
 
  echo "########################## "
 echo -e  " Create Container Registry "
@@ -58,10 +58,10 @@ sudo az keyvault create \
 
 sudo az keyvault secret set --name "spring-datasource-url" \
     --vault-name $KEYVAULTNAME \
-    --value "jdbc:postgresql://anjnapostgres"$VERSION".postgres.database.azure.com:5432/postgres"
+    --value "jdbc:postgresql://innovationpostgres"$VERSION".postgres.database.azure.com:5432/postgres"
 sudo az keyvault secret set --name "spring-datasource-username" \
     --vault-name $KEYVAULTNAME \
-    --value "anjna"$VERSION"@anjnapostgres"$VERSION
+    --value "innovation"$VERSION"@innovationpostgres"$VERSION
 sudo az keyvault secret set --name "spring-datasource-password" \
     --vault-name $KEYVAULTNAME \
     --value "Postgres"$VERSION
@@ -94,11 +94,7 @@ SBCONNSTRING=$(sudo az servicebus namespace authorization-rule keys list --resou
 #every queue has its own list of participants=> senders and receivers \
 #queue=> group chat thread on whatsapp
 sudo az servicebus queue create --resource-group $RESOURCE_GROUP --namespace-name $SERVICEBUSNAME --name $SERVICEBUSQUEUE
-echo -e "azure.keyvault.client-id="$SP_APPID
-echo -e "azure.keyvault.client-key="$SP_PASSWORD
-echo -e "azure.keyvault.tenant-id="$SP_TENANT_ID
-echo -e "azure.keyvault.uri=https://"$KEYVAULTNAME".vault.azure.net/"
-echo -e "spring.jms.servicebus.connection-string="$SBCONNSTRING
+
 egrep -lRZ "3243dffc-1cc3-42e6-89ad-9d7eeed1d23b" | xargs -0 -l sed -i -e s/"3243dffc-1cc3-42e6-89ad-9d7eeed1d23b"/$SP_APPID/g
 egrep -lRZ "S~GBcRDBuddGAFUPlj1Oj7YwH03drJ.0Ld" | xargs -0 -l sed -i -e s/"S~GBcRDBuddGAFUPlj1Oj7YwH03drJ.0Ld"/$SP_PASSWORD/g
 egrep -lRZ "https://contosokvakm.vault.azure.net/" | xargs -0 -l sed -i -e s+"https://contosokvakm.vault.azure.net/"+"https://"$KEYVAULTNAME".vault.azure.net/"+g
@@ -108,10 +104,10 @@ egrep -lRZ $SERVER_ORIG_IP | xargs -0 -l sed -i -e s/$SERVER_ORIG_IP/$SERVER_NEW
 egrep -lRZ $POSTGRES_ORIG_PASSWD | xargs -0 -l sed -i -e s/$POSTGRES_ORIG_PASSWD/$POSTGRES_NEW_PASSWD/g
 egrep -lRZ $POSTGRES_ORIG_DB | xargs -0 -l sed -i -e s/$POSTGRES_ORIG_DB/$POSTGRES_NEW_DB/g
 #egrep -lRZ $POSTGRES_USER_NAME_ORIG | xargs -0 -l sed -i -e s/$POSTGRES_USER_NAME_ORIG/$POSTGRES_USER_NAME/g
-egrep -lRZ "anjnaq" | xargs -0 -l sed -i -e s/"anjnaq"/"anjnaq"$VERSION/g
+egrep -lRZ "anjnaq" | xargs -0 -l sed -i -e s/"anjnaq"/"innovationq"$VERSION/g
 egrep -lRZ $POSTGRES_ORIG_USER | xargs -0 -l sed -i -e s/$POSTGRES_ORIG_USER/$POSTGRES_NEW_USER/g
 cd stocks-master
-mvn install
+mvn clean install
 cd ..
 cd stocks-react-master
 npm clean install
@@ -120,3 +116,8 @@ cd stocks-worker
 mvn clean install
 mvn package
 cd ..
+echo -e "azure.keyvault.client-id="$SP_APPID
+echo -e "azure.keyvault.client-key="$SP_PASSWORD
+echo -e "azure.keyvault.tenant-id="$SP_TENANT_ID
+echo -e "azure.keyvault.uri=https://"$KEYVAULTNAME".vault.azure.net/"
+echo -e "spring.jms.servicebus.connection-string="$SBCONNSTRING

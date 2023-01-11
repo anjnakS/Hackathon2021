@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 @Component
 public class QueueReceiveController {
 
-    private static final String QUEUE_NAME = "anjnaq2";
+    private static final String QUEUE_NAME = "anjnaq";
 
     private final Logger logger = LoggerFactory.getLogger(QueueReceiveController.class);
     @Autowired
@@ -34,10 +34,11 @@ public class QueueReceiveController {
                 stocks.add(x);
             }
         }
-
-        StocksData max = Collections.max(stocks);
-       // System.out.println(stock+"  "+max.getLatestPrice()+"\n");
-        maxStocksDataRepository.save(new MaxStockData(stock, max.getLatestPrice(), max.getLatestTime()));
+        if (stocks.size() != 0) {
+            StocksData max = Collections.max(stocks);
+            System.out.println(stock+"  "+max.getLatestPrice()+"\n");
+            maxStocksDataRepository.save(new MaxStockData(stock, max.getLatestPrice(), max.getLatestTime()));
+        }
     }
 
 }
